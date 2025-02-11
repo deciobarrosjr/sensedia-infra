@@ -1,0 +1,60 @@
+name: Destroy the Infrastructure
+
+on:
+  workflow_dispatch:
+
+env: 
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  TF_TOKEN_APP_TERRAFORM_IO: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }} 
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "latest"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Destroy the L3-alb
+        run: |
+          _layer_path="./AWS-Resources/L3-alb"
+
+          cd ${_layer_path}
+          terraform init
+          terraform destroy -auto-approve
+
+      - name: Destroy the L2-irsa
+        run: |
+          _layer_path="./AWS-Resources/L2-irsa"
+
+          cd ${_layer_path}
+          terraform init
+          terraform destroy -auto-approve
+
+      - name: Destroy the L1-eks
+        run: |
+          _layer_path="./AWS-Resources/L1-eks"
+
+          cd ${_layer_path}
+          terraform init
+          terraform destroy -auto-approve
+
+      - name: Destroy the L0-vpc
+        run: |
+          _layer_path="./AWS-Resources/L0-vpc"
+
+          cd ${_layer_path}
+          terraform init
+          terraform destroy -auto-approve
