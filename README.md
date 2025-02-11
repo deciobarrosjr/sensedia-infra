@@ -1,59 +1,41 @@
 
-# ELB for EKS - Introduction
+# Sensedia Infra Structure - Introduction
 <br>
-The following container will work as a POC using the AWS Elastic Load Balancer (ELB) using <span style="color: Chocolate;">ClusterIP</span>, <span style="color: Chocolate;">NodePort</span> and <span style="color: Chocolate;">LoadbBalancer</span>.<br>
-The objective is using a very simple Helo World application that will be packaged using Helm Chart and deployed using Terraform.<br>
+The following container will work as a technical challenge using the AWS Elastic Load Balancer (ELB) on the options <span style="color: Chocolate;">ClusterIP</span>, <span style="color: Chocolate;">NodePort</span> and <span style="color: Chocolate;">LoadbBalancer</span>.<br>
+The objective is creating an infra structure to be used by the Sensedia Apl to delivery a simple Hello World..<br>
 <br>
-This POC has the following folder structure:
+This Repository has the following folder structure:
 <br><br>
 
-* <span style="color: Chocolate;">APL-HelloWorld</span> - contains the Hello World python application.
-* <span style="color: Chocolate;">HLM-HelloWorld</span> - This folder contains the helm chart that will be use to package the applicatiion.
-* <span style="color: Chocolate;">AWS-Resources</span> - This folder contains all the AWS resources to be provisioned by layers: <br>
+
+* <span style="color: Chocolate;">AWS-Resources</span> - This folder contains all the AWS resources to be provisioned by layers as the best practices suggests: <br>
 	* L0-vpc: will create all nework resources
 	* L1-eks: will create de Cluster and the Node Group
 	* L2-irsa: will provision the IAM for Service Account.
-	* L3-deploy-apl: will deploy 3 PODs using the same Helm Chart packaged before and with different running parameters.
-* <span style="color: Chocolate;">Scripts</span>
-	* force-apply-all: this script is responsible for creating and deploying to ECR the docker and Helm Package images. After this it will execute the terraform config files to deploy the application. This script executes the following actions:
-	<br>
-
-		> CREATES THE DOCKER IMAGE LOCALLY<br>
-		> CREATE AN ECR ON AWS TO HOLDS THE APPLICATION DOCKER IMAGE<br>
-		> AUTHENTICATE DOCKER TO ECR<br>
-		> PUSHING THE DOCKER IMAGE TO ECR<br>
-		> EXECUTES THE HELM CHART LINT<br>
-		> PACKAGE THE HELM CHART<br>
-		> CREATE AN ECR ON AWS TO HOLDS THE HELM CHART CREATED<br>
-		> AUTHENTICATE HELM TO ECR<br>
-		> PUSH THE HELM CHART TO THE ECR CREATED<br>
-		> DEPLOY THE AWS RESOURCES<br>
-
-		This script could works as a base for creating a pipeline on a similar project.
-
-	* force-destroy-all: responsible for destroying everything that was created by the force-apply-all script.
-
 <br><br>
 
-# Running this POC
+# Provisionnig the infrastruture
 
-This POC may be executed on 4 different cluster arquitectures combining the use of Public/Private subnets for the worker nodes and internal/internet-facing for the Load Balancer Schema.<br>
+This Repository may be used on 4 different cluster arquitectures combining the use of Public/Private subnets for the worker nodes and internal/internet-facing for the Load Balancer Schema on the application side.<br>
 
-The following variables may be changed to achieve the desired POC between the four combinations:<br><br>
-To choose between the private/public subnets, change the folling variable:<br>
+The following variables should be changed to choose the desired infra structure requirements for the challenge:<br><br>
+> To choose between the private/public subnets, change the following variable:<br>
  <span style="color: green;">AWS-Resources -> L1-eks -> terraform.tfvars -> pub-priv-sel</span>
-<br>
-To choose betweeen internal/internet-facing Load Balancer, change the following variables (AlbScheme-1, AlbScheme-2, AlbScheme-3) on the following file:
+<br><br>
+> To choose betweeen internal/internet-facing Load Balancer, change the following variables (AlbScheme-1, AlbScheme-2, AlbScheme-3) on the following file:
 <br>
 <span style="color: green;">AWS-Resources -> L3-deploy-apl -> terraform.tfvars -> pub-priv-sel</span>
 
+<span style="color: red;">NOTE</span>: the provisioning for this challenge will be done manually. There are many other better alternatives like creating a pipeline to deliver the infrastructure or registering this repository with an ArgoCD previously installed on another cluster for example.
+I don´t believe that i will have time to do any so i will try to create the pipeline for the aplication CI/CD.
+
 
 ## 1. Cluster and Node Group delivered on Public Subnets and internet-facing Load Balancer
-The following image illustrates how this POC works, in general, and what is required to test the application:
+The following image illustrates how this challeng works, in general, and what is required to test the application:
 
 ![image](/images/public-subnets-internet-facing-lb.jpg)
 
-This probably is the most appropriate arquitecture for services to be accessed by customers like applications front-end.
+This is probably the most appropriate arquitecture for services to be accessed by customers like applications front-end.
 The three applications <span style="color: chocolate;">my-apl-1, my-apl-2, my-apl-3</span> will be delivered on Public Subnets.<br>
 Three PODs will be created with each of then having the service.type as: <span style="color: chocolate;">ClusterIP, LoadBalancer and NodePort</span>.<br>
 If you log inside any PODs (or create a new one on the cluster), you will be able to access any of the application using the following curl:<br>
@@ -170,80 +152,3 @@ rm helm-v3.14.0-linux-amd64.tar.gz &&
 rm -rf linux-amd64",
 ```
 <br>
-
-## Running the application on Visual Code
-
-<br>
-The following commands should be use to execute the Python app inside the VC:<br>
-<br>
-
-``` bash
-cd "${CONTAINER_PATH}/APL-HelloWorld"
-python3 app.py
-```
-<br>
-
-# Packaging a Helm Chart
-As detailed before, the simple Hello World application was created on the folder APL-HelloWorld.<br>
-Basically the application will expose the <span style="color: Chocolate;">Hostname</span> and the <span style="color: Chocolate;">Service Type</span> that was passed to the application using the <span style="color: Chocolate;">values.yaml</span>.<br>
-
-![image](/images/hello-world.jpg)
-<br><br>
-
-
-## Creating the new Helm Chart folder to use
-<br>
-The document <span style="color: Chocolate;">C:\WORK\CONHECIMENTO\DOCS\Kubernetes\Helm\helm.docx</span>, on the Knowledge Base, holds the detailed knowledge about Helm.<br>
-For the purpose of this POC we will detail the procedure that was followed to create a new Helm Chart <span style="color: Chocolate;">HLM-HelloWorld</span>.
-<br><br>
-We used the following commands to create a new Helm Chart to be used by this POC:
-<br><br>
-
-``` bash
-cd "${CONTAINER_PATH}"
-helm create HLM-HelloWorld
-```
-<br>
-The following folder/files structures will be created by the helm create:<br><br>
-
-![image](/images/helm-create.jpg)
-
-In the case os this POC we will create a very basic helm chart using only the <span style="color: Chocolate;">templates</span> folder and the <span style="color: Chocolate;">values.yaml</span>.<br>
-On the templates folder, we will use only 3 manifests:
-<br>
-*	<span style="color: Chocolate;">Deployments</span>: which is used to release your application code.
-*	<span style="color: Chocolate;">Services</span>: which is used to route traffic internally to your code.
-*	<span style="color: Chocolate;">Ingress</span>: resources route external traffic into the cluster to your code.
-<br><br>
-
-
-## Packaging the Helm Chart locally
-<br>
-
-1. The first step to create an application Helm Chart is to develop the manifests like: <span style="color: Chocolate;">template.yaml</span>, <span style="color: Chocolate;">services.yaml</span>, <span style="color: Chocolate;">ingress.yaml</span>.<br>
-In this POC, the manifests is very simple.<br>
-Basically we use only some variables on the <span style="color: Chocolate;">values.yaml</span> to customize how our application will works. In our case, we will use the same Helm Chart to expose 3 different services to the outside world. Each of then using: <span style="color: Chocolate;">ClusterIP</span>, <span style="color: Chocolate;">NodePort</span> and <span style="color: Chocolate;">LoadBalance</span>.<br>
-
-2. The second is creating the application image using docker build.<br>
-Once the the image was created (<span style="color: Chocolate;">check it with docker image ls</span>) you are ready to package your Helm Chart.<br>
-
-3. Use the following procedure to package your Helm Chart:
-<br>
-``` bash
-cp "${CONTAINER_PATH}/HLM-HelloWorld/Chart-orig.yaml" "${CONTAINER_PATH}/HLM-HelloWorld/Chart.yaml"
-sed -i "s|"-Helm-Chart-Name-"|${_PREFIX_NAME}|g" "${CONTAINER_PATH}/HLM-HelloWorld/Chart.yaml"
-
-helm package "${CONTAINER_PATH}/HLM-HelloWorld" --destination "${CONTAINER_PATH}/HLM-Package"
-```
-<br>
-
-<span style="color: red;">NOTE</span>: we use the cp and sed commands to change the Helm Chart Package Name that will be created using the helm package.
-
-
-
-
-
-
-
-
-

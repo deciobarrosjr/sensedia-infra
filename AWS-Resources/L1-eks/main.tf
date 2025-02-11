@@ -54,7 +54,7 @@ module "my-cluster" {
   
 
   ############################################################################################################################################
-  #                                                           SUBNET_IDs                                                                    #
+  #                                                           SUBNET_IDs                                                                     #
   # This is used to know where to created the ENIs (Elastic Network Interfaces) for the EKS nodes to communicate with the EKS control plane. #
   ############################################################################################################################################
 
