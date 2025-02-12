@@ -1,3 +1,12 @@
+# Terraform
+./L0-vpc/.terraform.lock.hcl
+./L0-vpc/.terraform/
+./L1-eks/.terraform.lock.hcl
+./L1-eks/.terraform/
+.terraform.lock.hcl
+.terraform/
+*.tfstate.backup
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
