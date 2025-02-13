@@ -1,8 +1,8 @@
 
-# Sensedia Infra Structure - Introduction
+# Sensedia Infra Structure for HelloWorld
 <br>
 The following container will work as a technical challenge using the AWS Elastic Load Balancer (ELB) on the options <span style="color: Chocolate;">ClusterIP</span>, <span style="color: Chocolate;">NodePort</span> and <span style="color: Chocolate;">LoadbBalancer</span>.<br>
-The objective is creating an infra structure to be used by the Sensedia Apl to delivery a simple Hello World..<br>
+The objective is creating an infra structure to be used by the Sensedia Apl to delivery a simple Hello World.<br>
 <br>
 This Repository has the following folder structure:
 <br><br>
