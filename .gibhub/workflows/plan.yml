@@ -1,11 +1,11 @@
-name: Destroy the Infra Structure
+name: Plan the Infra Structure
 
 on:
   workflow_dispatch:
 
 env: 
   AWS_REGION: ${{ vars.AWS_REGION }}
-  TF_TOKEN_APP_TERRAFORM_IO: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}  
+  TF_TOKEN_APP_TERRAFORM_IO: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}
 
 jobs:
   destroy:
@@ -27,26 +27,28 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Destroy the L2-irsa
-        run: |
-          _layer_path="./AWS-Resources/L2-irsa"
-
-          cd ${_layer_path}
-          terraform init
-          terraform destroy -auto-approve
-
-      - name: Destroy the L1-eks
-        run: |
-          _layer_path="./AWS-Resources/L1-eks"
-
-          cd ${_layer_path}
-          terraform init
-          terraform destroy -auto-approve
-
-      - name: Destroy the L0-vpc
+      - name: Apply the L0-vpc
         run: |
           _layer_path="./AWS-Resources/L0-vpc"
 
           cd ${_layer_path}
           terraform init
-          terraform destroy -auto-approve
+          terraform plan
+
+      - name: Apply the L1-eks
+        run: |
+          _layer_path="./AWS-Resources/L1-eks"
+
+          cd ${_layer_path}
+          terraform init
+          terraform plan
+
+      - name: Apply the L2-irsa
+        run: |
+          _layer_path="./AWS-Resources/L2-irsa"
+
+          cd ${_layer_path}
+          terraform init
+          terraform plan
+
+
