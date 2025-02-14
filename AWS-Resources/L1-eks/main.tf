@@ -114,18 +114,3 @@ module "my-namespaces" {
   metadata        = var.metadata
 
 }
-
-
-####################################################################################################
-#                                     CLUSTER LOCAL AUTHENTICATION 
-####################################################################################################
- 
-resource "null_resource" "cluster_authentication" {
-
-  depends_on = [module.my-cluster]
-
-  provisioner "local-exec" {
-    interpreter = ["/bin/bash", "-c"]    
-    command = "aws eks update-kubeconfig --region  ${var.region} --name ${var.eks-cluster-name};clear"      
-  }    
-}
