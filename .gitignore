@@ -5,6 +5,7 @@
 ./L1-eks/.terraform/
 .terraform.lock.hcl
 .terraform/
+.github/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
