@@ -54,7 +54,13 @@ jobs:
       - name: Pushing the state files
         run: |
           cd ${{ github.workspace }}
+
           git add .
           git commit -m "Pushing the state files"
-          git push
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+          git remote add origin "git@github.com:${{ github.repository }}.git"
+
+          git push -u origin main
 
