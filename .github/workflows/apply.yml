@@ -5,6 +5,8 @@ on:
 
 env: 
   AWS_REGION: ${{ vars.AWS_REGION }}
+  USER_EMAIL: ${{ vars.USER_EMAIL }}
+  USER_NAME: ${{ vars.USER_NAME }}
   TF_TOKEN_APP_TERRAFORM_IO: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}
 
 jobs:
@@ -57,8 +59,8 @@ jobs:
 
           git add .
           git commit -m "Pushing the state files"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
 
           git remote add origin "git@github.com:${{ github.repository }}.git"
 

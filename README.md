@@ -47,7 +47,8 @@ Use the following direction to create your secret inside the repository: <span s
 ### Required variables
 
 <span style="color: pink;">AWS_REGION</span>: The region used to create the resources. The same region as the one used to create the infra structure.<br>
-
+<span style="color: pink;">USER_EMAIL</span>: The user email to be used on git.<br>
+<span style="color: pink;">USER_NAME</span>: The user name to be used on git.<br>
 <br>
 
 # Provisionnig the infrastruture
