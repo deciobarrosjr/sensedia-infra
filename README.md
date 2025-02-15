@@ -56,7 +56,9 @@ Use the following direction to create your secret inside the repository: <span s
 This Repository may be used on 4 different cluster/application arquitectures combining the use of Public/Private subnets for the worker nodes and internal/internet-facing for the Load Balancer Schema on the application side.<br>
 
 > To choose between the private/public subnets, change the following variable:<br>
- <span style="color: green;">AWS-Resources -> L1-eks -> terraform.tfvars -> pub-priv-sel</span>
+ <span style="color: green;">AWS-Resources -> L1-eks -> terraform.tfvars -> pub-priv-sel</span><br>
+
+<span style="color: red;">NOTE</span>: for this challenge the variable will be set as <span style="color: chocolate;">private</span>.<br>
 
 <br>
 The infra structure provisioning is a manually triggered workflow on GitHub.<br><br>

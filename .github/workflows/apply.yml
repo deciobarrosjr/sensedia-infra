@@ -54,6 +54,7 @@ jobs:
           terraform apply -auto-approve
 
       - name: Pushing the state files
+        if: always()
         run: |
           cd ${{ github.workspace }}
 

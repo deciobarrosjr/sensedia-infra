@@ -1,4 +1,4 @@
-name: Destroy the Infra Structure
+name: Destroy the Infrastructure
 
 on:
   workflow_dispatch:
@@ -29,6 +29,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Pulling the state files
+        run: |
+          cd ${{ github.workspace }}
+
+          git config --global user.email ${{ env.USER_EMAIL }}
+          git config --global user.name ${{ env.USER_NAME }}
+
+          if ! git remote | grep -q 'origin'; then
+            git remote add origin "git@github.com:${{ github.repository }}.git"
+          fi     
+
+          git pull origin main
+
       - name: Destroy the L2-irsa
         run: |
           _layer_path="./AWS-Resources/L2-irsa"
@@ -54,6 +67,7 @@ jobs:
           terraform destroy -auto-approve
 
       - name: Pushing the state files
+        if: always()
         run: |
           cd ${{ github.workspace }}
 
@@ -66,4 +80,4 @@ jobs:
             git remote add origin "git@github.com:${{ github.repository }}.git"
           fi
 
-          git push -u origin ${{ github.ref_name }}
+          git push origin main
