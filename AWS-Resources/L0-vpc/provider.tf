@@ -6,10 +6,6 @@ terraform {
     workspaces {
       name = "sensedia-infra"
     }
-
-    overrides {
-      tfstate = "l0-vpc.tfstate"
-    }
   }
 
 

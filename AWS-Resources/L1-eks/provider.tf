@@ -6,10 +6,6 @@ terraform {
     workspaces {
       name = "sensedia-infra"
     }
-
-    overrides {
-      tfstate = "l1-eks.tfstate"
-    }
   }
 
   required_providers {
