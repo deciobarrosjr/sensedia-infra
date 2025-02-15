@@ -1,11 +1,9 @@
 terraform {
 
-  backend "remote" {
-    organization = "dbj-hcl"
-
-    workspaces {
-      name = "sensedia-infra"
-    }
+  backend "s3" {
+    bucket = "terraform-state-files-dbj"
+    key    = "sensedia/l2-irsa.tfstate"
+    region = "sa-east-1"
   }
 
   required_providers {
