@@ -5,7 +5,9 @@ on:
 
 env: 
   AWS_REGION: ${{ vars.AWS_REGION }}
-  TF_TOKEN_APP_TERRAFORM_IO: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}  
+  USER_EMAIL: ${{ vars.USER_EMAIL }}
+  USER_NAME: ${{ vars.USER_NAME }}
+  TF_TOKEN_APP_TERRAFORM_IO: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }} 
 
 jobs:
   destroy:
@@ -50,3 +52,16 @@ jobs:
           cd ${_layer_path}
           terraform init
           terraform destroy -auto-approve
+
+      - name: Pushing the state files
+        run: |
+          cd ${{ github.workspace }}
+
+          git add .
+          git commit -m "Pushing the state files"
+          git config user.email "${{ env.USER_EMAIL }}"
+          git config user.name "${{ env.USER_NAME }}"
+
+          git remote add origin "git@github.com:${{ github.repository }}.git"
+
+          git push -u origin main
