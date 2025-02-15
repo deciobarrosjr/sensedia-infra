@@ -1,8 +1,17 @@
 terraform {
 
-  backend "local" {
-    path = "../tfstate/l0-vpc.tfstate"
+  backend "remote" {
+    organization = "dbj-hcl"
+
+    workspaces {
+      name = "sensedia-infra"
+    }
+
+    overrides {
+      tfstate = "l0-vpc.tfstate"
+    }
   }
+
 
   required_providers {
     aws = {

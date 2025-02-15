@@ -5,8 +5,6 @@ on:
 
 env: 
   AWS_REGION: ${{ vars.AWS_REGION }}
-  USER_EMAIL: ${{ vars.USER_EMAIL }}
-  USER_NAME: ${{ vars.USER_NAME }}
   TF_TOKEN_APP_TERRAFORM_IO: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}
 
 jobs:
@@ -29,19 +27,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Pulling the state files
-        run: |
-          cd ${{ github.workspace }}
-
-          git config --global user.email ${{ env.USER_EMAIL }}
-          git config --global user.name ${{ env.USER_NAME }}
-
-          if ! git remote | grep -q 'origin'; then
-            git remote add origin "git@github.com:${{ github.repository }}.git"
-          fi     
-
-          git pull origin main
-          
       - name: Apply the L0-vpc
         run: |
           _layer_path="./AWS-Resources/L0-vpc"
@@ -66,18 +51,3 @@ jobs:
           terraform init
           terraform apply -auto-approve
 
-      - name: Pushing the state files
-        if: always()
-        run: |
-          cd ${{ github.workspace }}
-
-          git config --global user.email ${{ env.USER_EMAIL }}
-          git config --global user.name ${{ env.USER_NAME }}
-          git add .
-          git commit -m "Pushing the state files"
-
-          if ! git remote | grep -q 'origin'; then
-            git remote add origin "git@github.com:${{ github.repository }}.git"
-          fi
-
-          git push -u origin ${{ github.ref_name }}

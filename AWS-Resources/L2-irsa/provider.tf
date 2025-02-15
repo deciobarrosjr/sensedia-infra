@@ -1,7 +1,15 @@
 terraform {
 
-  backend "local" {
-    path = "../tfstate/l2-irsa.tfstate"
+  backend "remote" {
+    organization = "dbj-hcl"
+
+    workspaces {
+      name = "sensedia-infra"
+    }
+
+    overrides {
+      tfstate = "l2-irsa.tfstate"
+    }
   }
 
   required_providers {
