@@ -6,10 +6,12 @@
 ####################################################################################################
 
 data "terraform_remote_state" "l0-vpc" {
-  backend = "local"
+  backend = "s3"
 
   config = {
-    path = "../tfstate/l0-vpc.tfstate"    
+    bucket = "terraform-state-files-dbj"
+    key    = "sensedia/l0-vpc.tfstate"
+    region = "sa-east-1"
   }
 }
 
