@@ -92,7 +92,7 @@ done
 #####     PUSHING THE fstates TO THE REPOSITORY      #####
 
 git status
-git add .
+git add -A
 git commit -m "Terraform apply of all layers"
 git push
 
