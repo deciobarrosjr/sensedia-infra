@@ -38,11 +38,21 @@ irsa-apl-policy = {
     irsa-effect     = "Allow"
     irsa-resources  = ["*"]
     irsa-actions    = [
-                        "ecr:GetDownloadUrlForLayer",
-                        "ecr:BatchCheckLayerAvailability",
-                        "ecr:GetAuthorizationToken",
-                        "ecr:DescribeRepositories",
-                        "ecr:ListImages"
-                      ]
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetAuthorizationToken",
+                "ecr:DescribeRepositories",
+                "ecr:ListImages",
+                "ecr:BatchGetImage",
+                "ecr:CreateRepository",
+                "ecr:DeleteRepository",
+                "ecr:PutImage",
+                "ecr:DeleteImage",
+                "ecr:SetRepositoryPolicy",
+                "ecr:DeleteRepositoryPolicy",
+                "ecr:TagResource",
+                "ecr:UntagResource",
+                "ecr:ListTagsForResource"
+                ]
   }
 }
