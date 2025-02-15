@@ -57,11 +57,13 @@ jobs:
         run: |
           cd ${{ github.workspace }}
 
+          git config --global user.email ${{ env.USER_EMAIL }}
+          git config --global user.name ${{ env.USER_NAME }}
           git add .
           git commit -m "Pushing the state files"
-          git config user.email "${{ env.USER_EMAIL }}"
-          git config user.name "${{ env.USER_NAME }}"
 
-          git remote add origin "git@github.com:${{ github.repository }}.git"
+          if ! git remote | grep -q 'origin'; then
+            git remote add origin "git@github.com:${{ github.repository }}.git"
+          fi
 
-          git push -u origin main
+          git push -u origin ${{ github.ref_name }}
