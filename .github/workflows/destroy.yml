@@ -27,6 +27,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Destroy the L3-deploy-alb
+        run: |
+          _layer_path="./AWS-Resources/L3-deploy-alb"
+
+          cd ${_layer_path}
+          terraform init
+          terraform destroy -auto-approve
+
       - name: Destroy the L2-irsa
         run: |
           _layer_path="./AWS-Resources/L2-irsa"

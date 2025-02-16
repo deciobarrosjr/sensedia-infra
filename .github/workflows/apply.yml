@@ -51,3 +51,10 @@ jobs:
           terraform init
           terraform apply -auto-approve
 
+      - name: L3-deploy-alb
+        run: |
+          _layer_path="./AWS-Resources/L3-deploy-alb"
+
+          cd ${_layer_path}
+          terraform init
+          terraform apply -auto-approve
