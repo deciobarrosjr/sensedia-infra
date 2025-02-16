@@ -41,7 +41,7 @@ data "aws_eks_cluster_auth" "my-aws-cluster-auth" {
 
 resource "null_resource" "delay" {
   provisioner "local-exec" {
-    command = "sleep 600"  # Adjust the time in seconds as needed
+    command = "sleep 300"  # Adjust the time in seconds as needed
   }
 }
 
@@ -52,7 +52,7 @@ resource "null_resource" "delay" {
 
 resource "helm_release" "my-alb-controller" {
 
-  depends_on = [ data.terraform_remote_state.l2-irsa, data.terraform_remote_state.l1-eks ]
+  depends_on = [ data.terraform_remote_state.l2-irsa, data.terraform_remote_state.l1-eks, null_resource.delay ]
 
   name              = var.alb-controller-name
   repository        = var.alb-controller-repository
