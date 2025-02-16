@@ -51,9 +51,9 @@ jobs:
           terraform init
           terraform plan
 
-      - name: Apply the L3-deploy-alb
+      - name: Apply the L3-alb
         run: |
-          _layer_path="./AWS-Resources/L3-deploy-alb"
+          _layer_path="./AWS-Resources/L3-alb"
 
           cd ${_layer_path}
           terraform init
