@@ -1,7 +1,8 @@
 
 # Sensedia Infra Structure for HelloWorld
 <br>
-The following container will work as a technical challenge using the AWS Elastic Load Balancer (ELB) on the options <span style="color: Chocolate;">ClusterIP</span>, <span style="color: Chocolate;">NodePort</span> and <span style="color: Chocolate;">LoadbBalancer</span>.<br>
+This repository holds the Terraform Config Files to deploy the required infra structure to be used to delivery the application.<br>
+
 The objective is creating an infra structure to be used by the Sensedia Apl to delivery a simple Hello World.<br>
 <br>
 This Repository has the following folder structure:
@@ -11,7 +12,7 @@ This Repository has the following folder structure:
 * <span style="color: Chocolate;">AWS-Resources</span> - This folder contains all the AWS resources to be provisioned by layers as the best practices suggests: <br>
 	* **L0-vpc**: will create all nework resources
 	* **L1-eks**: will create de Cluster and the Node Group
-	* **L2-irsa**: will provision the IAM for Service Account.
+	* **L2-irsa**: will provision the (IRSA) IAM Role for Service Account to allow the required access the AWS Resources from the cluster.
 <br><br>
 
 ## Requirements to deploy the infra structure
