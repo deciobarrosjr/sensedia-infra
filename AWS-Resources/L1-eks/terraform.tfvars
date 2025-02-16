@@ -7,7 +7,7 @@ region          = "sa-east-1"
 #     Defines if the Cluster and Node Group will be created on Private or Public Subnets           #
 ####################################################################################################
 
-pub-priv-sel = "private"
+pub-priv-sel = "public"
 
 
 ####################################################################################################

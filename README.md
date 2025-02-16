@@ -83,3 +83,10 @@ In general, this is a good alternative for client facing applications.<br>
 
 The figure above illustrate that we are using the <span style="color: chocolate;">internet-facing</span> as the Service Scheme for all three application.
 
+<br>
+
+## The Terraform State Files Management
+For the purpose of this challenge, i decided to use the an AWS S3 Bucket to hold state files making all of then available to be used by the sensedia-apl repository during the application deployment.<br>
+The S3 Bucket will have the following structure:br>
+
+![image](/images/s3-tfstate.jpg)
