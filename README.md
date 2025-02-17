@@ -57,7 +57,7 @@ This Repository may be used on 4 different cluster/application arquitectures com
 > To choose between the private/public subnets, change the following variable:<br>
  <span style="color: green;">AWS-Resources -> L1-eks -> terraform.tfvars -> pub-priv-sel</span><br>
 
-<span style="color: red;">NOTE</span>: for this challenge the variable will be set as <span style="color: chocolate;">private</span>.<br>
+<span style="color: red;">NOTE</span>: for this challenge the variable will be set as <span style="color: chocolate;">public</span>.<br>
 
 <br>
 The infra structure provisioning is a manually triggered workflow on GitHub.<br><br>
@@ -74,12 +74,12 @@ The available workflows are the following:<br>
 <br>
 To trigger a workflow, just click on it´s name as illustrated above.<br>
 
-## Cluster and Node Group delivered on Private Subnets and internet-facing Load Balancer
+## Cluster and Node Group delivered on Public Subnets and internet-facing Load Balancer
 The following image illustrates the choosed architecture for the challenge implementation.<br>
 The work-nodes will be delived on a Private NetNetwork.<br>
 In general, this is a good alternative for client facing applications.<br>
 
-![image](/images/private-subnets-internet-facing-lb.jpg)
+![image](/images/public-subnets-internet-facing-lb.jpg)
 
 The figure above illustrate that we are using the <span style="color: chocolate;">internet-facing</span> as the Service Scheme for all three application.
 
