@@ -91,3 +91,11 @@ For the purpose of this challenge, i decided to use the an AWS S3 Bucket to hold
 The S3 Bucket will have the following structure:br>
 
 ![image](/images/s3-tfstate.jpg)
+
+<br>
+
+## Existing limitations
+
+* **var.region**: the region is defined on the GitHub repository variables for the entire provisioning except for the variable networking on the file L0-vpc/terraform.tfvars. This is a limitation that exists on the current aws_vpc (v1.0.0). Ideally the region should be defined outside the networking variable. This will be solver on the next moduleversion.<br>
+
+* **aws-actions/configure-aws-credentials@v3**: based on the best practices, this action was supposed to be using the OIDC provider. Will keep this way for simplicity but i will create a specific repo/POC to explain how to use the correct authentication mode.
