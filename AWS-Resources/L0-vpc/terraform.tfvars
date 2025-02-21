@@ -3,7 +3,7 @@
 
 networking=  {
     cidr_block           = "10.1.0.0/16"
-    region               = var.region
+    region               = "sa-east-1"
     vpc_name             = "custom-vpc"
     i_gateway_name       = "custom-igw"
     nat_gateways         = true
