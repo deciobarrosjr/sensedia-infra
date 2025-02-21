@@ -27,6 +27,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Defining the required variables for Terraform
+        run: |
+          echo "TF_VAR_region=${{ env.AWS_REGION }}" >> $GITHUB_ENV
+
       - name: Destroy the L3-alb
         run: |
           _layer_path="./AWS-Resources/L3-alb"
