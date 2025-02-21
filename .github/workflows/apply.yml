@@ -27,6 +27,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      # DEFINING THE REQUIRED VARIABLES FOR TERRAFORM EXECUTION   
+
+      - name: Defining the required variables for Terraform
+        run: |
+          echo "TF_VAR_region=${{ env.AWS_REGION }}" >> $GITHUB_ENV
+
       - name: Apply the L0-vpc
         run: |
           _layer_path="./AWS-Resources/L0-vpc"
